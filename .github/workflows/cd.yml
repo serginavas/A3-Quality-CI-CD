@@ -1,22 +1,21 @@
 name: Django CD
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_run:
     workflows: ["Django CI"]
     types:
       completed: [success]
+  push:
+    branches: [ "main" ]
 
 jobs:
   deploy:
+    # Solo se ejecuta si el CI ha pasado con éxito o si haces push a main
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Deploy to Production
-      run: |
-        echo "Desplegando la aplicación web..."
-        echo "Simulando envío de archivos al servidor de producción"
-        # Aquí irían los comandos reales de subida (SCP, Docker, Heroku, etc.)
-        echo "Despliegue finalizado con éxito para la práctica A3"
+      - name: Deploy to Render
+        # Este comando "despierta" a Render para que empiece el despliegue
+        run: |
+          curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK }}
