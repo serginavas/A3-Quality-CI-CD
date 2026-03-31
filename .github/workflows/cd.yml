@@ -1,0 +1,22 @@
+name: Django CD
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Django CI"]
+    types:
+      completed: [success]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Deploy to Production
+      run: |
+        echo "Desplegando la aplicación web..."
+        echo "Simulando envío de archivos al servidor de producción"
+        # Aquí irían los comandos reales de subida (SCP, Docker, Heroku, etc.)
+        echo "Despliegue finalizado con éxito para la práctica A3"
