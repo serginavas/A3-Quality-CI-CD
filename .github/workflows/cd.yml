@@ -2,20 +2,19 @@ name: Django CD
 
 on:
   workflow_run:
-    workflows: ["Django CI"] # Se activa solo cuando el CI termina
+    workflows: ["Django CI"]
     types:
-      completed: [success] # Solo si el CI ha salido bien (checks en verde)
+      - completed
   push:
-    branches: [ "main" ] # Opcional: también permite disparo manual al subir a main
+    branches: [ "main" ]
 
 jobs:
   deploy:
-    # Condición de seguridad: solo ejecuta si el CI fue exitoso
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
     runs-on: ubuntu-latest
+    # Aquesta condició és la que realment mira si el CI ha anat bé
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
     
     steps:
       - name: Deploy to Render
-        # Este comando hace la llamada mágica a Render usando el Secret que has guardado
         run: |
           curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK }}
