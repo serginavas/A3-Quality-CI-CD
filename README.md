@@ -43,12 +43,3 @@ Cada vegada que es realitza un `push` o un `pull_request` a la branca `main`, s'
 ### 2. Desplegament Continu (CD)
 Ubicació: `.github/workflows/cd.yml`  
 Aquest flux només s'activa si el **CI finalitza amb èxit**. Utilitza un **Deploy Hook** per notificar a Render que ha de reconstruir la imatge Docker i actualitzar el servei automàticament sense intervenció manual.
-
----
-
-## 📦 Execució amb Docker
-
-### Localment (Desenvolupament)
-Per aixecar el projecte a la teva màquina local amb una sola comanda:
-```bash
-docker-compose up --build
