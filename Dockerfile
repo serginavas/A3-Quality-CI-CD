@@ -1,7 +1,5 @@
-# Usamos 3.12 que es la que te salía en el error de antes
 FROM python:3.12-slim
 
-# Evita archivos .pyc y permite ver logs en tiempo real
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
